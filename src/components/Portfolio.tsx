@@ -12,84 +12,117 @@ export default function Portfolio() {
   const categories = [
     { id: "all", name: "All", icon: Video },
     { id: "wedding", name: "Wedding", icon: Camera },
+    { id: "short-form", name: "Short-Form", icon: Edit3 },
+    { id: "long-form", name: "Long-Form", icon: Video },
+    { id: "event", name: "Event", icon: Camera },
     { id: "commercial", name: "Commercial", icon: Edit3 },
-    { id: "event", name: "Event", icon: Video },
   ];
 
   const videos = [
     {
       id: 1,
-      title: "Wedding Highlights - Sarah & John",
+      title: "Wedding Highlights - Cinematic Storytelling",
       category: "wedding",
       description:
-        "Beautiful wedding ceremony and reception highlights with cinematic editing.",
-      videoUrl: "https://youtu.be/adMETcDfnvI?si=yAHTgtDEKPWNQWWv",
+        "Beautiful wedding ceremony highlights with emotional storytelling, cinematic shots, and professional color grading.",
+      videoUrl: "https://youtu.be/JzxH5GyGW2A?si=uwpY2KseyNOl2m8Q",
       thumbnail: "/personal/image1.JPG",
       duration: "3:45",
       views: "2.5K",
     },
     {
       id: 2,
-      title: "Corporate Event Coverage",
-      category: "event",
-      description: "Professional event coverage for Tech Conference 2024.",
-      videoUrl: "https://youtu.be/adMETcDfnvI?si=yAHTgtDEKPWNQWWv",
+      title: "TikTok Viral Dance Challenge",
+      category: "short-form",
+      description:
+        "Trending TikTok dance challenge with viral effects, smooth transitions, and engaging social media content.",
+      videoUrl: "https://vm.tiktok.com/ZMSqthv1v/",
       thumbnail: "/personal/image2.JPG",
-      duration: "5:20",
-      views: "1.8K",
+      duration: "0:30",
+      views: "50K",
     },
     {
       id: 3,
-      title: "Product Commercial - Tech Startup",
-      category: "commercial",
-      description: "Dynamic product showcase with motion graphics and effects.",
-      videoUrl: "https://youtu.be/adMETcDfnvI?si=yAHTgtDEKPWNQWWv",
+      title: "Ethiopian Culture Documentary",
+      category: "long-form",
+      description:
+        "Comprehensive documentary exploring Ethiopian traditions, cultural heritage, and modern life in Ethiopia.",
+      videoUrl: "https://youtu.be/vS647awlPzw?si=GTBD7X7bccXDemE3",
       thumbnail: "/personal/image3.JPG",
-      duration: "2:30",
-      views: "3.2K",
+      duration: "25:15",
+      views: "8.2K",
     },
     {
       id: 4,
-      title: "Birthday Celebration",
+      title: "Graduation Ceremony Coverage",
       category: "event",
       description:
-        "Memorable birthday party highlights with creative transitions.",
-      videoUrl: "https://youtu.be/adMETcDfnvI?si=yAHTgtDEKPWNQWWv",
+        "Professional graduation ceremony coverage with highlight reel, emotional moments, and polished editing.",
+      videoUrl: "https://youtu.be/Gbh73tbD_A4?si=p2R64obUFqy0WWyT",
       thumbnail: "/personal/image1.JPG",
-      duration: "4:15",
-      views: "1.5K",
+      duration: "8:20",
+      views: "5.7K",
     },
     {
       id: 5,
-      title: "Restaurant Promotional Video",
-      category: "commercial",
-      description: "Appetizing food photography with smooth editing and music.",
-      videoUrl: "https://youtu.be/adMETcDfnvI?si=yAHTgtDEKPWNQWWv",
+      title: "Fashion Showcase Instagram Reel",
+      category: "short-form",
+      description:
+        "Creative fashion showcase reel with trendy transitions, brand integration, and Instagram-optimized content.",
+      videoUrl: "https://youtu.be/Fx59plUUW-0?si=PaX7PPppPm_1--By",
       thumbnail: "/personal/image2.JPG",
-      duration: "3:00",
-      views: "2.1K",
+      duration: "0:45",
+      views: "12K",
     },
     {
       id: 6,
-      title: "Engagement Party Highlights",
-      category: "wedding",
+      title: "Vintage Pixels Creative Agency",
+      category: "commercial",
       description:
-        "Romantic engagement celebration with elegant editing style.",
+        "Professional brand showcase for Vintage Pixels creative agency featuring advertising and production services.",
       videoUrl: "https://youtu.be/adMETcDfnvI?si=yAHTgtDEKPWNQWWv",
       thumbnail: "/personal/image3.JPG",
-      duration: "4:45",
-      views: "1.9K",
+      duration: "2:30",
+      views: "3.1K",
     },
   ];
 
   const getYouTubeThumbnail = (videoUrl: string) => {
+    // Handle TikTok videos differently
+    if (videoUrl.includes("tiktok.com")) {
+      console.log("TikTok video detected, using fallback thumbnail");
+      return null; // Will use fallback thumbnail
+    }
+
     const videoId = videoUrl.match(
       /(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})/
     )?.[1];
     if (videoId) {
-      return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+      console.log("YouTube video ID:", videoId);
+      // Try different thumbnail qualities
+      const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+      console.log("YouTube thumbnail URL:", thumbnailUrl);
+      return thumbnailUrl;
     }
+    console.log("No video ID found for URL:", videoUrl);
     return null;
+  };
+
+  const getThumbnailSrc = (video: {
+    videoUrl: string;
+    thumbnail: string;
+    title: string;
+  }) => {
+    const youtubeThumbnail = getYouTubeThumbnail(video.videoUrl);
+    console.log(
+      "Video:",
+      video.title,
+      "YouTube thumbnail:",
+      youtubeThumbnail,
+      "Fallback:",
+      video.thumbnail
+    );
+    return youtubeThumbnail || video.thumbnail;
   };
 
   const filteredVideos =
@@ -172,11 +205,16 @@ export default function Portfolio() {
                 {/* Thumbnail */}
                 <div className="relative aspect-video overflow-hidden">
                   <Image
-                    src={getYouTubeThumbnail(video.videoUrl) || video.thumbnail}
+                    src={getThumbnailSrc(video)}
                     alt={video.title}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-300"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    onError={(e) => {
+                      console.log("Image failed to load, using fallback");
+                      const target = e.target as HTMLImageElement;
+                      target.src = video.thumbnail;
+                    }}
                   />
 
                   {/* Play Button Overlay */}

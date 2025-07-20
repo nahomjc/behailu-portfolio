@@ -54,7 +54,7 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 z-50 flex items-center justify-center overflow-hidden">
+    <div className="fixed inset-0 bg-gradient-to-br from-white via-purple-50 to-blue-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-blue-900/20 z-50 flex items-center justify-center overflow-hidden">
       {/* Animated Background Particles */}
       <div className="absolute inset-0">
         {[...Array(20)].map((_, i) => (
