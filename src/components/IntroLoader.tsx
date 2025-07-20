@@ -11,6 +11,7 @@ interface IntroLoaderProps {
 export default function IntroLoader({ onComplete }: IntroLoaderProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [showContent, setShowContent] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   const steps = [
     { text: "Initializing", icon: Zap },
@@ -20,6 +21,7 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
   ];
 
   useEffect(() => {
+    setIsClient(true);
     const timer = setTimeout(() => {
       setShowContent(true);
     }, 500);
@@ -28,7 +30,7 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
   }, []);
 
   useEffect(() => {
-    if (!showContent) return;
+    if (!showContent || !isClient) return;
 
     const interval = setInterval(() => {
       setCurrentStep((prev) => {
@@ -45,7 +47,11 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
     }, 800);
 
     return () => clearInterval(interval);
-  }, [showContent, onComplete]);
+  }, [showContent, onComplete, steps.length, isClient]);
+
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <div className="fixed inset-0 bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 z-50 flex items-center justify-center overflow-hidden">
@@ -56,13 +62,21 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
             key={i}
             className="absolute w-1 h-1 bg-purple-400 rounded-full"
             initial={{
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
+              x:
+                Math.random() *
+                (typeof window !== "undefined" ? window.innerWidth : 1200),
+              y:
+                Math.random() *
+                (typeof window !== "undefined" ? window.innerHeight : 800),
               opacity: 0,
             }}
             animate={{
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
+              x:
+                Math.random() *
+                (typeof window !== "undefined" ? window.innerWidth : 1200),
+              y:
+                Math.random() *
+                (typeof window !== "undefined" ? window.innerHeight : 800),
               opacity: [0, 1, 0],
             }}
             transition={{
@@ -75,7 +89,7 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
       </div>
 
       {/* Grid Pattern */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-10 dark:opacity-5">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
       </div>
 
@@ -115,7 +129,7 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="text-4xl md:text-6xl font-bold text-white mb-4"
+          className="text-4xl md:text-6xl font-bold text-white mb-6"
         >
           <span className="gradient-text">Behailu</span>
         </motion.h1>
@@ -242,7 +256,9 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
       {/* Scan Line Effect */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-t from-transparent via-purple-500/20 to-transparent h-1"
-        animate={{ y: [0, window.innerHeight, 0] }}
+        animate={{
+          y: [0, typeof window !== "undefined" ? window.innerHeight : 800, 0],
+        }}
         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
       />
     </div>

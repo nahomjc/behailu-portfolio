@@ -1,122 +1,112 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useState } from "react";
-import {
-  Play,
-  Heart,
-  Calendar,
-  Youtube,
-  Instagram,
-  Film,
-  Award,
-} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Play, ExternalLink, Video, Camera, Edit3 } from "lucide-react";
+import Image from "next/image";
 
 export default function Portfolio() {
-  const [activeCategory, setActiveCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
   const categories = [
-    { id: "all", name: "All Work", icon: Film },
-    { id: "wedding", name: "Wedding Videos", icon: Heart },
-    { id: "short-form", name: "Short-Form", icon: Instagram },
-    { id: "long-form", name: "Long-Form", icon: Youtube },
-    { id: "events", name: "Events", icon: Calendar },
+    { id: "all", name: "All", icon: Video },
+    { id: "wedding", name: "Wedding", icon: Camera },
+    { id: "commercial", name: "Commercial", icon: Edit3 },
+    { id: "event", name: "Event", icon: Video },
   ];
 
-  // Function to extract video ID and generate YouTube thumbnail
-  const getYouTubeThumbnail = (url: string) => {
-    const videoId = url.split("/embed/")[1];
-    return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-  };
-
-  const portfolioItems = [
+  const videos = [
     {
-      id: "wedding-1",
-      title: "Wedding Highlights - Beautiful Ceremony",
+      id: 1,
+      title: "Wedding Highlights - Sarah & John",
       category: "wedding",
       description:
-        "Emotional wedding highlights with cinematic storytelling and beautiful color grading.",
-      videoUrl: "https://www.youtube.com/embed/JzxH5GyGW2A",
+        "Beautiful wedding ceremony and reception highlights with cinematic editing.",
+      videoUrl: "https://youtu.be/adMETcDfnvI?si=yAHTgtDEKPWNQWWv",
+      thumbnail: "/personal/image1.JPG",
       duration: "3:45",
       views: "2.5K",
-      type: "Wedding Highlights",
     },
     {
-      id: "short-1",
-      title: "TikTok Dance Challenge",
-      category: "short-form",
-      description:
-        "Viral TikTok content with trending effects and engaging transitions.",
-      videoUrl: "https://www.youtube.com/embed/Fx59plUUW-0",
-      duration: "0:30",
-      views: "50K",
-      type: "TikTok Video",
+      id: 2,
+      title: "Corporate Event Coverage",
+      category: "event",
+      description: "Professional event coverage for Tech Conference 2024.",
+      videoUrl: "https://youtu.be/adMETcDfnvI?si=yAHTgtDEKPWNQWWv",
+      thumbnail: "/personal/image2.JPG",
+      duration: "5:20",
+      views: "1.8K",
     },
     {
-      id: "long-1",
-      title: "Documentary - Ethiopian Culture",
-      category: "long-form",
-      description:
-        "Cultural documentary exploring Ethiopian traditions and modern life.",
-      videoUrl: "https://www.youtube.com/embed/vS647awlPzw",
-      duration: "25:15",
-      views: "8.2K",
-      type: "Documentary",
+      id: 3,
+      title: "Product Commercial - Tech Startup",
+      category: "commercial",
+      description: "Dynamic product showcase with motion graphics and effects.",
+      videoUrl: "https://youtu.be/adMETcDfnvI?si=yAHTgtDEKPWNQWWv",
+      thumbnail: "/personal/image3.JPG",
+      duration: "2:30",
+      views: "3.2K",
     },
     {
-      id: "event-1",
-      title: "Event Coverage - Graduation Ceremony",
-      category: "events",
+      id: 4,
+      title: "Birthday Celebration",
+      category: "event",
       description:
-        "Graduation ceremony coverage with highlight reel and professional editing.",
-      videoUrl: "https://www.youtube.com/embed/Gbh73tbD_A4",
-      duration: "8:20",
-      views: "5.7K",
-      type: "Event Coverage",
-    },
-    {
-      id: "short-2",
-      title: "Instagram Reel - Fashion Showcase",
-      category: "short-form",
-      description:
-        "Fashion showcase reel with creative transitions and brand integration.",
-      videoUrl: "https://www.youtube.com/embed/afX75HyS84o",
-      duration: "0:45",
-      views: "12K",
-      type: "Instagram Reel",
-    },
-    {
-      id: "long-2",
-      title: "Podcast Episode - Tech Talk",
-      category: "long-form",
-      description:
-        "Professional podcast editing with enhanced audio and visual elements.",
-      videoUrl: "https://www.youtube.com/embed/adMETcDfnvI",
-      duration: "45:30",
-      views: "3.1K",
-      type: "Podcast",
-    },
-    {
-      id: "event-2",
-      title: "Birthday Celebration Highlights",
-      category: "events",
-      description:
-        "Birthday party highlights with fun transitions and music integration.",
-      videoUrl: "https://www.youtube.com/embed/K3JniWTI4A0",
+        "Memorable birthday party highlights with creative transitions.",
+      videoUrl: "https://youtu.be/adMETcDfnvI?si=yAHTgtDEKPWNQWWv",
+      thumbnail: "/personal/image1.JPG",
       duration: "4:15",
-      views: "2.3K",
-      type: "Event Video",
+      views: "1.5K",
+    },
+    {
+      id: 5,
+      title: "Restaurant Promotional Video",
+      category: "commercial",
+      description: "Appetizing food photography with smooth editing and music.",
+      videoUrl: "https://youtu.be/adMETcDfnvI?si=yAHTgtDEKPWNQWWv",
+      thumbnail: "/personal/image2.JPG",
+      duration: "3:00",
+      views: "2.1K",
+    },
+    {
+      id: 6,
+      title: "Engagement Party Highlights",
+      category: "wedding",
+      description:
+        "Romantic engagement celebration with elegant editing style.",
+      videoUrl: "https://youtu.be/adMETcDfnvI?si=yAHTgtDEKPWNQWWv",
+      thumbnail: "/personal/image3.JPG",
+      duration: "4:45",
+      views: "1.9K",
     },
   ];
 
-  const filteredItems =
-    activeCategory === "all"
-      ? portfolioItems
-      : portfolioItems.filter((item) => item.category === activeCategory);
+  const getYouTubeThumbnail = (videoUrl: string) => {
+    const videoId = videoUrl.match(
+      /(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})/
+    )?.[1];
+    if (videoId) {
+      return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+    }
+    return null;
+  };
+
+  const filteredVideos =
+    selectedCategory === "all"
+      ? videos
+      : videos.filter((video) => video.category === selectedCategory);
+
+  const handleVideoClick = (videoUrl: string) => {
+    setSelectedVideo(videoUrl);
+  };
+
+  const closeModal = () => {
+    setSelectedVideo(null);
+  };
 
   return (
-    <section id="portfolio" className="py-20 bg-gray-50">
+    <section id="portfolio" className="py-20 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -125,12 +115,12 @@ export default function Portfolio() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            My <span className="gradient-text">Portfolio</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+            Video <span className="gradient-text">Portfolio</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            A showcase of my best video editing work across different categories
-            and styles
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            Explore my latest video editing projects showcasing various styles
+            and techniques
           </p>
         </motion.div>
 
@@ -138,134 +128,145 @@ export default function Portfolio() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
           className="flex flex-wrap justify-center gap-4 mb-12"
         >
           {categories.map((category) => (
             <motion.button
               key={category.id}
+              onClick={() => setSelectedCategory(category.id)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => setActiveCategory(category.id)}
               className={`flex items-center space-x-2 px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                activeCategory === category.id
+                selectedCategory === category.id
                   ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg"
-                  : "bg-white text-gray-700 hover:bg-gray-100"
+                  : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
               }`}
             >
-              <category.icon className="w-5 h-5" />
+              <category.icon className="w-4 h-4" />
               <span>{category.name}</span>
             </motion.button>
           ))}
         </motion.div>
 
-        {/* Portfolio Grid */}
+        {/* Video Grid */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
           viewport={{ once: true }}
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {filteredItems.map((item, index) => (
+          {filteredVideos.map((video, index) => (
             <motion.div
-              key={item.id}
+              key={video.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="bg-white rounded-2xl overflow-hidden shadow-lg card-hover"
+              className="group cursor-pointer"
+              onClick={() => handleVideoClick(video.videoUrl)}
             >
-              {/* Video Thumbnail */}
-              <div
-                className="relative group cursor-pointer"
-                onClick={() => setSelectedVideo(item.videoUrl)}
-              >
-                <div className="aspect-video bg-gradient-to-br from-purple-100 to-blue-100 flex items-center justify-center relative overflow-hidden">
-                  <img
-                    src={getYouTubeThumbnail(item.videoUrl)}
-                    alt={item.title}
-                    className="absolute inset-0 w-full h-full object-cover"
-                    onError={(e) => {
-                      // Fallback to a default thumbnail if YouTube thumbnail fails
-                      e.currentTarget.src = "/personal/image1.JPG";
-                    }}
+              <div className="relative bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                {/* Thumbnail */}
+                <div className="relative aspect-video overflow-hidden">
+                  <Image
+                    src={getYouTubeThumbnail(video.videoUrl) || video.thumbnail}
+                    alt={video.title}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-300"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-300"></div>
-                  <div className="relative z-10 text-center">
-                    <div className="w-16 h-16 bg-white/80 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                      <Play className="w-8 h-8 text-purple-600" />
-                    </div>
-                    <p className="text-sm text-white font-medium">
-                      Click to Play
-                    </p>
-                  </div>
-                </div>
-                <div className="absolute top-4 right-4 bg-black/70 text-white px-2 py-1 rounded text-sm">
-                  {item.duration}
-                </div>
-                <div className="absolute bottom-4 left-4 bg-black/70 text-white px-2 py-1 rounded text-sm">
-                  {item.views} views
-                </div>
-              </div>
 
-              {/* Video Info */}
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-medium text-purple-600">
-                    {item.type}
-                  </span>
-                  <div className="flex items-center space-x-2 text-gray-500">
-                    <Play className="w-4 h-4" />
-                    <span className="text-sm">{item.views}</span>
+                  {/* Play Button Overlay */}
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                      <Play className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+
+                  {/* Video Info */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                    <div className="flex items-center justify-between text-white text-sm">
+                      <span>{video.duration}</span>
+                      <span>{video.views} views</span>
+                    </div>
                   </div>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {item.description}
-                </p>
+
+                {/* Content */}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                    {video.title}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                    {video.description}
+                  </p>
+                </div>
               </div>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Video Modal */}
+        {/* Call to Action */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mt-12"
+        >
+          <motion.button
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-full font-semibold flex items-center justify-center space-x-2 hover:shadow-lg transition-all duration-300 mx-auto"
+          >
+            <ExternalLink className="w-5 h-5" />
+            <span>View All Projects</span>
+          </motion.button>
+        </motion.div>
+      </div>
+
+      {/* Video Modal */}
+      <AnimatePresence>
         {selectedVideo && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
-            onClick={() => setSelectedVideo(null)}
+            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+            onClick={closeModal}
           >
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
-              className="relative w-full max-w-4xl"
+              className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
+              <iframe
+                src={`https://www.youtube.com/embed/${
+                  selectedVideo.match(
+                    /(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})/
+                  )?.[1]
+                }?autoplay=1`}
+                title="Video Player"
+                className="w-full h-full"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
               <button
-                onClick={() => setSelectedVideo(null)}
-                className="absolute -top-12 right-0 text-white text-2xl hover:text-gray-300"
+                onClick={closeModal}
+                className="absolute top-4 right-4 w-8 h-8 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70 transition-colors"
               >
-                ✕
+                ×
               </button>
-              <div className="aspect-video bg-black rounded-lg overflow-hidden">
-                <iframe
-                  src={selectedVideo}
-                  title="Video Player"
-                  className="w-full h-full"
-                  allowFullScreen
-                />
-              </div>
             </motion.div>
           </motion.div>
         )}
-      </div>
+      </AnimatePresence>
     </section>
   );
 }

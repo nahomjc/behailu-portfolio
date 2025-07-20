@@ -1,19 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Play,
-  ExternalLink,
-  Volume2,
-  VolumeX,
-  Maximize2,
-  Settings,
-} from "lucide-react";
-import { useState } from "react";
+import { Play, ExternalLink } from "lucide-react";
 
 export default function VideoShowcase() {
-  const [isHovered, setIsHovered] = useState(false);
-
   const handleVideoClick = () => {
     window.open("https://youtu.be/adMETcDfnvI?si=yAHTgtDEKPWNQWWv", "_blank");
   };
