@@ -67,7 +67,7 @@ export default function Certificates() {
   ];
 
   return (
-    <section id="certificates" className="py-20 bg-white">
+    <section id="certificates" className="py-20 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -76,10 +76,10 @@ export default function Certificates() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             <span className="gradient-text">Certifications</span> & Skills
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Professional certifications and technical skills that demonstrate my
             expertise in video editing and content creation
           </p>
@@ -100,12 +100,12 @@ export default function Certificates() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="certificate-card card-hover"
+              className="certificate-card card-hover bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 border border-gray-200 dark:border-gray-600"
             >
               <div className="relative z-10">
                 {/* Certificate Image */}
                 <div className="mb-6">
-                  <div className="relative w-full h-64 rounded-lg overflow-hidden bg-white">
+                  <div className="relative w-full h-64 rounded-lg overflow-hidden bg-white dark:bg-gray-800">
                     <Image
                       src={cert.image}
                       alt={cert.title}
@@ -123,29 +123,31 @@ export default function Certificates() {
                 </div>
 
                 <div className="flex items-center space-x-2 mb-3">
-                  <span className="text-sm font-medium text-white/80">
+                  <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
                     {cert.category}
                   </span>
-                  <div className="w-2 h-2 bg-white/60 rounded-full"></div>
-                  <span className="text-sm text-white/80">{cert.date}</span>
+                  <div className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full"></div>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                    {cert.date}
+                  </span>
                 </div>
 
-                <h3 className="text-xl font-bold text-white mb-4">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
                   {cert.title}
                 </h3>
 
                 <div className="space-y-2 mb-4">
-                  <div className="flex items-center space-x-2 text-white/90">
+                  <div className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
                     <GraduationCap className="w-4 h-4" />
                     <span className="text-sm">{cert.institution}</span>
                   </div>
-                  <div className="flex items-center space-x-2 text-white/90">
+                  <div className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
                     <MapPin className="w-4 h-4" />
                     <span className="text-sm">{cert.location}</span>
                   </div>
                 </div>
 
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
                   {cert.description}
                 </p>
               </div>
@@ -159,13 +161,13 @@ export default function Certificates() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-3xl p-8"
+          className="bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-blue-900/20 rounded-3xl p-8"
         >
           <div className="text-center mb-8">
-            <h3 className="text-3xl font-bold text-gray-900 mb-4">
+            <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
               Technical Skills
             </h3>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               Proficient in industry-standard software and tools for
               professional video editing and content creation
             </p>
@@ -179,12 +181,12 @@ export default function Certificates() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}
                 viewport={{ once: true }}
-                className="bg-white rounded-xl p-4 text-center shadow-md hover:shadow-lg transition-shadow duration-300"
+                className="bg-white dark:bg-gray-800 rounded-xl p-4 text-center shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-200 dark:border-gray-700"
               >
                 <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-3">
                   <Award className="w-6 h-6 text-white" />
                 </div>
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   {skill}
                 </span>
               </motion.div>
@@ -200,7 +202,7 @@ export default function Certificates() {
           viewport={{ once: true }}
           className="mt-16 text-center"
         >
-          <h3 className="text-2xl font-bold text-gray-900 mb-8">
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">
             Professional Achievements
           </h3>
           <div className="grid md:grid-cols-3 gap-8">
@@ -214,10 +216,10 @@ export default function Certificates() {
               <div className="w-16 h-16 bg-gradient-to-r from-green-600 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Calendar className="w-8 h-8 text-white" />
               </div>
-              <h4 className="text-xl font-bold text-gray-900 mb-2">
+              <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                 2+ Years Experience
               </h4>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300">
                 Professional video editing experience across multiple platforms
                 and industries
               </p>
@@ -233,10 +235,10 @@ export default function Certificates() {
               <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Award className="w-8 h-8 text-white" />
               </div>
-              <h4 className="text-xl font-bold text-gray-900 mb-2">
+              <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                 50+ Projects
               </h4>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300">
                 Successfully completed projects for various clients and
                 production companies
               </p>
@@ -252,10 +254,10 @@ export default function Certificates() {
               <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <ExternalLink className="w-8 h-8 text-white" />
               </div>
-              <h4 className="text-xl font-bold text-gray-900 mb-2">
+              <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                 100% Satisfaction
               </h4>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300">
                 Consistently delivering high-quality work that exceeds client
                 expectations
               </p>

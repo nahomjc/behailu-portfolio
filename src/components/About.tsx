@@ -81,7 +81,8 @@ export default function About() {
                     src="/personal/image1.JPG"
                     alt="Behailu Mefkere - Video Editor"
                     fill
-                    className="rounded-full object-cover shadow-lg"
+                    className="rounded-full object-contain shadow-lg"
+                    sizes="(max-width: 768px) 192px, 192px"
                   />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">

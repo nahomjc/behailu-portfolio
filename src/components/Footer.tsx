@@ -8,7 +8,6 @@ import {
   MapPin,
   Youtube,
   Instagram,
-  Facebook,
   Linkedin,
 } from "lucide-react";
 
